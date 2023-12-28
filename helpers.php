@@ -17,7 +17,6 @@ function basePath(string $path = ''): string
  * Loads a view
  *
  * @param string $name
- * @return void
  */
 function loadView(string $name): void
 {
@@ -33,7 +32,6 @@ function loadView(string $name): void
  * Loads a partial
  *
  * @param string $name
- * @return void
  */
 function loadPartial(string $name): void
 {
@@ -49,7 +47,6 @@ function loadPartial(string $name): void
  * Inspect a value(s)
  *
  * @param mixed $value
- * @return void
  */
 function inspect(mixed $value): void
 {
@@ -62,7 +59,6 @@ function inspect(mixed $value): void
  * Inspect a value(s) and die
  *
  * @param mixed $value
- * @return void
  */
 #[NoReturn] function inspectAndDie(mixed $value): void
 {
