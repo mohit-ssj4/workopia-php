@@ -17,11 +17,13 @@ function basePath(string $path = ''): string
  * Loads a view
  *
  * @param string $name
+ * @param array $data
  */
-function loadView(string $name): void
+function loadView(string $name, array $data = []): void
 {
     $path = basePath("views/{$name}.view.php");
     if (file_exists($path)) {
+        extract($data);
         require $path;
     } else {
         echo "View '{$name}' not found!";
@@ -41,6 +43,17 @@ function loadPartial(string $name): void
     } else {
         echo "Partial '{$name}' not found!";
     }
+}
+
+/**
+ * Formats the salary
+ *
+ * @param string $salary
+ * @return string
+ */
+function formatSalary(string $salary): string
+{
+    return '$' . number_format(floatval($salary));
 }
 
 /**
