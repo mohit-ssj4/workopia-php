@@ -2,7 +2,8 @@
 
 namespace Framework;
 
-use JetBrains\PhpStorm\NoReturn;
+use Exception;
+use App\Controllers\ErrorController;
 
 class Router
 {
@@ -13,14 +14,16 @@ class Router
      *
      * @param string $method
      * @param string $uri
-     * @param string $controller
+     * @param string $action
      */
-    public function registerRoute(string $method, string $uri, string $controller): void
+    public function registerRoute(string $method, string $uri, string $action): void
     {
+        list($controller, $controllerMethod) = explode('@', $action);
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
-            'controller' => $controller
+            'controller' => $controller,
+            'controllerMethod' => $controllerMethod
         ];
     }
 
@@ -69,33 +72,28 @@ class Router
     }
 
     /**
-     * Loads error page
-     *
-     * @param int $httpCode
-     */
-    #[NoReturn] public function error(int $httpCode = 404): void
-    {
-        http_response_code($httpCode);
-        require basePath("controllers/error/{$httpCode}.php");
-        exit();
-    }
-
-    /**
      * Routes a request
      *
      * @param string $uri
      * @param string $method
+     * @throws Exception
      */
     public function route(string $uri, string $method): void
     {
         foreach ($this->routes as $route) {
             if ($route['uri'] === $uri && $route['method'] === $method) {
-                require basePath('App/' . $route['controller']);
+                // Getting the controller and controllerMethod
+                $controller = 'App\\Controllers\\' . $route['controller'];
+                $controllerMethod = $route['controllerMethod'];
+
+                // Instantiate the controller
+                $controllerInstance = new $controller();
+                $controllerInstance->$controllerMethod();
 
                 return;
             }
         }
 
-        $this->error();
+        ErrorController::notFound();
     }
 }
