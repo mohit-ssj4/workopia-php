@@ -1,14 +1,9 @@
 <?php
 
+require __DIR__ . '/../vendor/autoload.php';
 require '../helpers.php';
 
-// Creating a custom autoloader
-spl_autoload_register(function ($class) {
-    $path = basePath('Framework/' . $class . '.php');
-    if (file_exists($path)) {
-        require $path;
-    }
-});
+use Framework\Router;
 
 // Instantiating the router
 $router = new Router();

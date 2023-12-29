@@ -1,0 +1,16 @@
+{
+  "name": "mohit-ssj4/workopia-php",
+  "description": "Simple job listing app built with vanilla PHP",
+  "authors": [
+    {
+      "name": "Mohit Singh",
+      "email": "mohitsammal1997@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "Framework/",
+      "App\\": "App/"
+    }
+  }
+}

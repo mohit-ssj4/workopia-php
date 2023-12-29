@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework;
+
 use JetBrains\PhpStorm\NoReturn;
 
 class Router
