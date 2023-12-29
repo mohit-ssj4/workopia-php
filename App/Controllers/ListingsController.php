@@ -47,20 +47,21 @@ class ListingsController
     /**
      * Fetches the id from the request and loads the listings/show view
      *
+     * @param array $params
      * @return void
      * @throws Exception
      */
-    public function show(): void
+    public function show(array $params): void
     {
-        // Getting the listing id from the URL
-        $id = htmlspecialchars($_GET['id']) ?? null;
-        if (!empty($id)) {
-            // Fetching all the listings
-            $listing = $this->db->query('SELECT * FROM listings WHERE id=:id', ['id' => $id])->fetch();
+        $id = htmlspecialchars($params['id']) ?? null;
+        // Fetching all the listings
+        $listing = $this->db->query('SELECT * FROM listings WHERE id=:id', ['id' => $id])->fetch();
 
-            loadView('listings/show', ['listing' => $listing]);
-        } else {
-            goToPath();
+        if (empty($listing)) {
+            ErrorController::notFound('Listing not found');
+            return;
         }
+
+        loadView('listings/show', ['listing' => $listing]);
     }
 }
