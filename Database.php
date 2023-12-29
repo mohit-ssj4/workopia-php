@@ -33,13 +33,17 @@ class Database
      * Query the database
      *
      * @param string $query
+     * @param array $params
      * @return PDOStatement
      * @throws Exception
      */
-    public function query(string $query): PDOStatement
+    public function query(string $query, array $params = []): PDOStatement
     {
         try {
             $stmt = $this->conn->prepare($query);
+            foreach ($params as $param => $value) {
+                $stmt->bindValue(":{$param}", $value);
+            }
             $stmt->execute();
 
             return $stmt;

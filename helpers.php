@@ -57,6 +57,18 @@ function formatSalary(string $salary): string
 }
 
 /**
+ * Navigates to index
+ *
+ * @param string $path
+ * @return void
+ */
+#[NoReturn] function goToPath(string $path = "/"): void
+{
+    header("Location: {$path}");
+    exit();
+}
+
+/**
  * Inspect a value(s)
  *
  * @param mixed $value
