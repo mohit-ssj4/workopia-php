@@ -46,9 +46,9 @@ function formatSalary(string $salary): string
 }
 
 /**
- * Navigates to index
+ * Redirects to a given path
  */
-#[NoReturn] function goToPath(string $path = "/"): void
+#[NoReturn] function redirect(string $path = "/"): void
 {
     header("Location: {$path}");
     exit();

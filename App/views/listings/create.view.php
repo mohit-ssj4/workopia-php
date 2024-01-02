@@ -78,6 +78,17 @@ loadPartial('top-banner');
                         value="<?= $listing['benefits'] ?? '' ?>"
                 />
             </div>
+            <div class="mb-2">
+                <label for="tags">Tags</label>
+                <input
+                        id="tags"
+                        type="text"
+                        name="tags"
+                        placeholder="Tags"
+                        class="w-full px-4 py-2 my-3 border rounded focus:outline-none"
+                        value="<?= $listing['tags'] ?? '' ?>"
+                />
+            </div>
             <h2 class="text-2xl font-bold mb-6 text-center text-gray-500">
                 Company Info & Location
             </h2>
