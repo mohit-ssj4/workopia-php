@@ -12,6 +12,9 @@ loadPartial('navbar');
         <?php loadPartial('message'); ?>
         <!-- Flash Message End -->
         <form>
+            <?php loadPartial('errors', [
+                'errors' => $errors ?? []
+            ]); ?>
             <div class="mb-2">
                 <label for="email">Email</label>
                 <input

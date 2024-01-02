@@ -2,6 +2,7 @@
 
 if (!empty($router)) {
     $router->get('/', 'HomeController@index');
+
     $router->get('/listings', 'ListingsController@index');
     $router->get('/listings/create', 'ListingsController@create');
     $router->get('/listings/edit/{id}', 'ListingsController@edit');
@@ -13,4 +14,5 @@ if (!empty($router)) {
 
     $router->get('/auth/register', 'UserController@create');
     $router->get('/auth/login', 'UserController@login');
+    $router->post('/auth/register', 'UserController@store');
 }
