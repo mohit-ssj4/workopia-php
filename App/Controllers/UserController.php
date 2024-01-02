@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Framework\Database;
 use Framework\Validation;
 use Framework\Session;
+use JetBrains\PhpStorm\NoReturn;
 
 class UserController
 {
@@ -113,6 +114,17 @@ class UserController
             'state' => $state,
         ]);
 
+        redirect();
+    }
+
+    /**
+     * Log out a user and kills session
+     */
+    #[NoReturn] public function logout(): void
+    {
+        Session::clearAll();
+        $params = session_get_cookie_params();
+        setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
         redirect();
     }
 }
