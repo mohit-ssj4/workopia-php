@@ -40,7 +40,7 @@ loadPartial('top-banner');
                         id="description"
                         name="description"
                         placeholder="Job Description"
-                        class="w-full py-2 my-3 border rounded focus:outline-none"
+                        class="w-full py-2 px-4 my-3 border rounded focus:outline-none"
                 >
                 <?= $listing['description'] ?? '' ?>
             </textarea>
