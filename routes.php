@@ -4,17 +4,17 @@ if (!empty($router)) {
     $router->get('/', 'HomeController@index');
 
     $router->get('/listings', 'ListingsController@index');
-    $router->get('/listings/create', 'ListingsController@create');
-    $router->get('/listings/edit/{id}', 'ListingsController@edit');
+    $router->get('/listings/create', 'ListingsController@create', ['auth']);
+    $router->get('/listings/edit/{id}', 'ListingsController@edit', ['auth']);
     $router->get('/listings/{id}', 'ListingsController@show');
 
-    $router->post('/listings', 'ListingsController@store');
-    $router->put('/listings/{id}', 'ListingsController@update');
-    $router->delete('/listings/{id}', 'ListingsController@destroy');
+    $router->post('/listings', 'ListingsController@store', ['auth']);
+    $router->put('/listings/{id}', 'ListingsController@update', ['auth']);
+    $router->delete('/listings/{id}', 'ListingsController@destroy', ['auth']);
 
-    $router->get('/auth/register', 'UserController@create');
-    $router->get('/auth/login', 'UserController@login');
-    $router->post('/auth/register', 'UserController@store');
-    $router->post('/auth/logout', 'UserController@logout');
-    $router->post('/auth/login', 'UserController@authenticate');
+    $router->get('/auth/register', 'UserController@create', ['guest']);
+    $router->get('/auth/login', 'UserController@login', ['guest']);
+    $router->post('/auth/register', 'UserController@store', ['guest']);
+    $router->post('/auth/logout', 'UserController@logout', ['auth']);
+    $router->post('/auth/login', 'UserController@authenticate', ['guest']);
 }
