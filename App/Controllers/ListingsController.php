@@ -115,4 +115,20 @@ class ListingsController
             redirect('/listings');
         }
     }
+
+    /**
+     * Delete a listing
+     */
+    public function destroy(array $params): void
+    {
+        $id = htmlspecialchars($params['id']) ?? null;
+        $params = ['id' => $id];
+        $listing = $this->db->query('SELECT * FROM listings WHERE id=:id', $params)->fetch();
+        if (!$listing) {
+            ErrorController::notFound('Listing not found');
+            return;
+        }
+        $this->db->query('DELETE FROM listings WHERE id=:id', $params);
+        redirect('/listings');
+    }
 }
