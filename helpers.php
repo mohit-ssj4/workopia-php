@@ -4,9 +4,6 @@ use JetBrains\PhpStorm\NoReturn;
 
 /**
  * Gets the base path
- *
- * @param string $path
- * @return string
  */
 function basePath(string $path = ''): string
 {
@@ -15,9 +12,6 @@ function basePath(string $path = ''): string
 
 /**
  * Loads a view
- *
- * @param string $name
- * @param array $data
  */
 function loadView(string $name, array $data = []): void
 {
@@ -32,8 +26,6 @@ function loadView(string $name, array $data = []): void
 
 /**
  * Loads a partial
- *
- * @param string $name
  */
 function loadPartial(string $name): void
 {
@@ -47,9 +39,6 @@ function loadPartial(string $name): void
 
 /**
  * Formats the salary
- *
- * @param string $salary
- * @return string
  */
 function formatSalary(string $salary): string
 {
@@ -58,9 +47,6 @@ function formatSalary(string $salary): string
 
 /**
  * Navigates to index
- *
- * @param string $path
- * @return void
  */
 #[NoReturn] function goToPath(string $path = "/"): void
 {
@@ -70,8 +56,6 @@ function formatSalary(string $salary): string
 
 /**
  * Inspect a value(s)
- *
- * @param mixed $value
  */
 function inspect(mixed $value): void
 {
@@ -82,8 +66,6 @@ function inspect(mixed $value): void
 
 /**
  * Inspect a value(s) and die
- *
- * @param mixed $value
  */
 #[NoReturn] function inspectAndDie(mixed $value): void
 {
@@ -91,4 +73,12 @@ function inspect(mixed $value): void
     var_dump($value);
     echo '</pre>';
     die();
+}
+
+/**
+ * Sanitizes the dirty data
+ */
+function sanitize(string $dirty): string
+{
+    return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
 }

@@ -7,7 +7,7 @@ class Validation
     /**
      * Validates a string
      */
-    public static function string(string $value, int $min = 1, int $max = INF): bool
+    public static function string(string $value, int $min = 1, float $max = INF): bool
     {
         $length = strlen(trim($value));
 

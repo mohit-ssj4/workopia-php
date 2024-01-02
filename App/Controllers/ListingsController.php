@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use Framework\Database;
 use Exception;
+use Framework\Validation;
+use JetBrains\PhpStorm\NoReturn;
 
 class ListingsController
 {
@@ -24,7 +26,6 @@ class ListingsController
     /**
      * Fetches listings from the DB and loads the listings/index view
      *
-     * @return void
      * @throws Exception
      */
     public function index(): void
@@ -36,8 +37,6 @@ class ListingsController
 
     /**
      * Loads the listings/create view
-     *
-     * @return void
      */
     public function create(): void
     {
@@ -47,8 +46,6 @@ class ListingsController
     /**
      * Fetches the id from the request and loads the listings/show view
      *
-     * @param array $params
-     * @return void
      * @throws Exception
      */
     public function show(array $params): void
@@ -63,5 +60,45 @@ class ListingsController
         }
 
         loadView('listings/show', ['listing' => $listing]);
+    }
+
+    /**
+     * Store the data in the database
+     */
+    #[NoReturn] public function store(): void
+    {
+        $allowedFields = [
+            'title',
+            'description',
+            'salary',
+            'tags',
+            'company',
+            'address',
+            'city',
+            'state',
+            'phone',
+            'email',
+            'requirements',
+            'benefits'
+        ];
+        $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
+        $newListingData['user_id'] = 1;
+        $newListingData = array_map('sanitize', $newListingData);
+
+        $requiredFields = ['title', 'description', 'email', 'city', 'state'];
+        $errors = [];
+        foreach ($requiredFields as $field) {
+            if (empty($newListingData[$field]) || !Validation::string($newListingData[$field])) {
+                $errors[$field] = ucfirst($field) . ' is required';
+            }
+        }
+
+        if (!empty($errors)) {
+            // Reload the view with errors
+            loadView('listings/create', ['errors' => $errors, 'listing' => $newListingData]);
+        } else {
+            // Submit to DB
+            echo 'Success';
+        }
     }
 }
