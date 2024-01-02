@@ -40,8 +40,8 @@ class UserController
     {
         $name = $_POST["name"];
         $email = $_POST["email"];
-        $city = $_POST["city"];
-        $state = $_POST["state"];
+        $city = $_POST["city"] ?? null;
+        $state = $_POST["state"] ?? null;
         $password = $_POST["password"];
         $passwordConfirmation = $_POST["password_confirmation"];
 
@@ -64,12 +64,45 @@ class UserController
         if (!empty($errors)) {
             loadView('users/create', [
                 'errors' => $errors,
-                'users' => [
+                'user' => [
                     'name' => $name,
                     'email' => $email,
                     'city' => $city,
                     'state' => $state
                 ]]);
+            exit();
         }
+
+        // Check if email exists
+        $params = [
+            'email' => $email
+        ];
+        $user = $this->db->query('SELECT * FROM users WHERE email=:email', $params)->fetch();
+        if ($user) {
+            $errors['email'] = 'Email already exists';
+            loadView('users/create', [
+                'errors' => $errors,
+                'user' => [
+                    'name' => $name,
+                    'email' => $email,
+                    'city' => $city,
+                    'state' => $state
+                ]]);
+            exit();
+        }
+
+        // Create user in the DB
+        $params = [
+            'name' => $name,
+            'email' => $email,
+            'city' => $city,
+            'state' => $state,
+            'password' => password_hash($password, PASSWORD_DEFAULT)
+        ];
+        $this->db->query('INSERT INTO users (name, email, city, state, password) VALUES (:name, :email, :city, :state, :password)',
+            $params
+        );
+
+        redirect();
     }
 }

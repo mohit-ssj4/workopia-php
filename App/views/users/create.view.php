@@ -23,7 +23,7 @@ loadPartial('navbar');
                         name="name"
                         placeholder="Full Name"
                         class="w-full px-4 py-2 my-3 border rounded focus:outline-none"
-                        value="<?= $users['name'] ?? '' ?>"
+                        value="<?= $user['name'] ?? '' ?>"
                 />
             </div>
             <div class="mb-2">
@@ -34,7 +34,7 @@ loadPartial('navbar');
                         name="email"
                         placeholder="Email Address"
                         class="w-full px-4 py-2 my-3 border rounded focus:outline-none"
-                        value="<?= $users['email'] ?? '' ?>"
+                        value="<?= $user['email'] ?? '' ?>"
                 />
             </div>
             <div class="mb-2">
@@ -45,7 +45,7 @@ loadPartial('navbar');
                         name="city"
                         placeholder="City"
                         class="w-full px-4 py-2 my-3 border rounded focus:outline-none"
-                        value="<?= $users['city'] ?? '' ?>"
+                        value="<?= $user['city'] ?? '' ?>"
                 />
             </div>
             <div class="mb-2">
@@ -56,7 +56,7 @@ loadPartial('navbar');
                         name="state"
                         placeholder="State"
                         class="w-full px-4 py-2 my-3 border rounded focus:outline-none"
-                        value="<?= $users['state'] ?? '' ?>"
+                        value="<?= $user['state'] ?? '' ?>"
                 />
             </div>
             <div class="mb-2">
