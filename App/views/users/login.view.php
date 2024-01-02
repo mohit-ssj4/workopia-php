@@ -11,7 +11,7 @@ loadPartial('navbar');
         <!-- Flash Message Start -->
         <?php loadPartial('message'); ?>
         <!-- Flash Message End -->
-        <form>
+        <form method="POST" action="/auth/login">
             <?php loadPartial('errors', [
                 'errors' => $errors ?? []
             ]); ?>
@@ -23,6 +23,7 @@ loadPartial('navbar');
                         name="email"
                         placeholder="Email Address"
                         class="w-full px-4 py-2 my-3 border rounded focus:outline-none"
+                        value="<?= $email ?? '' ?>"
                 />
             </div>
             <div class="mb-2">
