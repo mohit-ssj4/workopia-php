@@ -6,6 +6,8 @@ use Framework\Database;
 use Exception;
 use Framework\Validation;
 use JetBrains\PhpStorm\NoReturn;
+use Framework\Session;
+use Framework\Authorization;
 
 class ListingsController
 {
@@ -31,7 +33,7 @@ class ListingsController
     public function index(): void
     {
         // Fetching all the listings
-        $listings = $this->db->query('SELECT * FROM listings')->fetchAll();
+        $listings = $this->db->query('SELECT * FROM listings ORDER BY created_at DESC')->fetchAll();
         loadView('listings/index', ['listings' => $listings]);
     }
 
@@ -82,7 +84,7 @@ class ListingsController
             'benefits'
         ];
         $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
-        $newListingData['user_id'] = 1;
+        $newListingData['user_id'] = Session::get('user')['id'];
         $newListingData = array_map('sanitize', $newListingData);
 
         $requiredFields = ['title', 'description', 'email', 'city', 'state', 'salary'];
@@ -130,6 +132,13 @@ class ListingsController
             ErrorController::notFound('Listing not found');
             return;
         }
+
+        // Authorization
+        if (!Authorization::isOwner($listing->user_id)) {
+            $_SESSION['error_message'] = 'You are not authorized to delete this listing';
+            redirect("/listings/{$id}");
+        }
+
         $this->db->query('DELETE FROM listings WHERE id=:id', $params);
 
         // Set flash message
@@ -186,7 +195,7 @@ class ListingsController
             'benefits'
         ];
         $updateValues = array_intersect_key($_POST, array_flip($allowedFields));
-        $updateValues['user_id'] = 1;
+        $updateValues['user_id'] = Session::get('user')['id'];
         $updateValues = array_map('sanitize', $updateValues);
 
         $requiredFields = ['title', 'description', 'email', 'city', 'state', 'salary'];

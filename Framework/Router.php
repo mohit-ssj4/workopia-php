@@ -2,7 +2,6 @@
 
 namespace Framework;
 
-use Exception;
 use App\Controllers\ErrorController;
 use Framework\Middleware\Authorize;
 
